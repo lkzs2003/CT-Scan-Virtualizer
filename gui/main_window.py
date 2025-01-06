@@ -107,7 +107,7 @@ class MainWindow(QMainWindow):
         directory = QFileDialog.getExistingDirectory(self, "Wybierz katalog z DICOM")
         # print(directory)
         if directory:
-            # try:
+            try:
                 self.dicom_loader = DicomLoader(directory)
                 # print(DicomLoader(directory))
                 image_array = self.dicom_loader.get_image_array()
@@ -119,8 +119,8 @@ class MainWindow(QMainWindow):
                 self.current_slice = 0
                 self.update_window_center_width()
                 self.display_image()
-            # except Exception as e:
-            #     self.show_error(f"Nie udało się załadować plików DICOM:\n{e}")
+            except Exception as e:
+                self.show_error(f"Nie udało się załadować plików DICOM:\n{e}")
 
     def update_window_center_width(self):
         if self.image_processor:
