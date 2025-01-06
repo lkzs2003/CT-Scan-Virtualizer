@@ -105,21 +105,22 @@ class MainWindow(QMainWindow):
 
     def load_dicom(self):
         directory = QFileDialog.getExistingDirectory(self, "Wybierz katalog z DICOM")
+        # print(directory)
         if directory:
-            try:
+            # try:
                 self.dicom_loader = DicomLoader(directory)
+                # print(DicomLoader(directory))
                 image_array = self.dicom_loader.get_image_array()
                 self.image_processor = ImageProcessor(image_array, self.dicom_loader.series)
                 spacing = self.image_processor.get_spacing()
                 self.stats_calculator = StatsCalculator(spacing)
-
                 self.slice_slider.setMaximum(image_array.shape[0] - 1)
                 self.slice_slider.setValue(0)
                 self.current_slice = 0
                 self.update_window_center_width()
                 self.display_image()
-            except Exception as e:
-                self.show_error(f"Nie udało się załadować plików DICOM:\n{e}")
+            # except Exception as e:
+            #     self.show_error(f"Nie udało się załadować plików DICOM:\n{e}")
 
     def update_window_center_width(self):
         if self.image_processor:
@@ -134,6 +135,7 @@ class MainWindow(QMainWindow):
             windowed = self.image_processor.apply_windowing(image, center, width)
 
             # convert to QImage
+            # print(windowed.shape)
             height, width_img = windowed.shape
             bytes_per_line = width_img
             q_image = QImage(windowed.data, width_img, height, bytes_per_line, QImage.Format_Grayscale8)

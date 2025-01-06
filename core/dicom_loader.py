@@ -25,7 +25,7 @@ class DicomLoader:
 
         # Sortowanie według InstanceNumber lub ImagePositionPatient
         if all(hasattr(ds, 'InstanceNumber') for ds in dicom_series):
-            dicom_series.sort(key=lambda x: int(x.InstanceNumber))
+            dicom_series.sort(key=lambda x: str(x.InstanceNumber))
         elif all(hasattr(ds, 'ImagePositionPatient') for ds in dicom_series):
             dicom_series.sort(key=lambda x: float(x.ImagePositionPatient[2]))
         else:
@@ -44,6 +44,17 @@ class DicomLoader:
             return False
 
     def get_image_array(self) -> np.ndarray:
-        images = [ds.pixel_array for ds in self.series]
+        images_file = [ds.pixel_array for ds in self.series]
+        images = []
+
+        for x in range(len(images_file)):
+            if len(np.shape(images_file[x]))>=3:
+                for i in range(len(images_file[x])):
+                    images.append(images_file[x][i])
+            else:
+                images.append(images_file[x])
+                
         image_array = np.stack(images, axis=0)
+        print(image_array)
+        print("spacja\n")
         return image_array
