@@ -185,6 +185,7 @@ class MainWindow(QMainWindow):
             height, width_img, _ = rgb_image.shape
             q_image = QImage(rgb_image.data, width_img, height, 3*width_img, QImage.Format_RGB888)
             pixmap = QPixmap.fromImage(q_image)
+
             self.image_label.setPixmap(pixmap.scaled(
                 self.image_label.size(), Qt.KeepAspectRatio, Qt.SmoothTransformation
             ))
@@ -204,7 +205,12 @@ class MainWindow(QMainWindow):
             # Adding histogram of ROI pixels
             self.ax.clear()
             roi_pixels = self.image_processor.image_array[self.current_slice][self.roi_mask == 1]
-            self.ax.hist(roi_pixels.flatten(), bins=50, color='blue', alpha=0.7)
+            n, bins, _ = self.ax.hist(roi_pixels.flatten(), bins=50, color='blue', alpha=0.7)
+            top_column = n.argsort()[-3:]
+            for bin_num in top_column:
+                count = n[bin_num]
+                x = (bins[bin_num] + bins[bin_num + 1]) / 2
+                self.ax.text(x, count, str(int(count)), ha='center', va='bottom')
             self.ax.set_title("Histogram pikseli ROI")
             self.ax.set_xlabel("Intensywność")
             self.ax.set_ylabel("Liczba pikseli")

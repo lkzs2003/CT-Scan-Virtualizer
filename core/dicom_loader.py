@@ -55,6 +55,6 @@ class DicomLoader:
                 images.append(images_file[x])
                 
         image_array = np.stack(images, axis=0)
-        print(image_array)
-        print("spacja\n")
+        # print(image_array)
+        # print("spacja\n")
         return image_array

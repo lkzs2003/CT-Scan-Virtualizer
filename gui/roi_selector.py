@@ -79,6 +79,10 @@ class RoiSelector(QDialog):
             x_min, x_max = sorted([x1, x2])
             y_min, y_max = sorted([y1, y2])
             mask = np.zeros_like(self.image, dtype=np.uint8)
-            mask[y_min:y_max, x_min:x_max] = 1
+            thickness = 2
+            mask[y_min:y_max, x_max-thickness:x_max] = 1
+            mask[y_min:y_max, x_min:x_min+thickness] = 1
+            mask[y_min:y_min+thickness, x_min:x_max] = 1
+            mask[y_max-thickness:y_max, x_min:x_max] = 1
             return mask
         return None
