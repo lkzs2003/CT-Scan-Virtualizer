@@ -1,7 +1,0 @@
-pydicom
-numpy
-matplotlib
-PyQt5
-opencv-python
-scipy
-pillow
