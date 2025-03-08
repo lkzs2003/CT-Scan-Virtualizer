@@ -1,5 +1,5 @@
 
-# ISMED2024Z_Zad2_Siemionek_Kwieciński
+# CT Scan Virutalizer
 
 ## Project Topic
 **Visualization of computed tomography (CT) data in the form of planar images.**
@@ -63,10 +63,5 @@ pip install -r requirements.txt
 pip install pydicom numpy matplotlib PyQt5 opencv-python scipy pillow
 ```
 
----
-
-## Authors
-- **Łukasz Siemionek** 
-- **Bartłomiej Kwieciński**
 ---
 
